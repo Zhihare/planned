@@ -9,8 +9,9 @@ export const getAllActive = createAsyncThunk(
 	"active/fetchActiveAll",
 	async (_, thunkAPI) => {
 		try {
-			const response = await axios.get(`/activity-log`);
-			return response.data.result;
+            const response = await axios.get(`/activity-log`);
+             console.log(response.data);
+			return response.data;
 		} catch (e: any) {
 			return thunkAPI.rejectWithValue(e.message);
 		}
@@ -24,7 +25,7 @@ export const getOneActive = createAsyncThunk(
     async (id:number, thunkAPI) => {
         try {
             const response = await axios.get(`/activity-log/${id}`);
-            return response.data.result;
+            return response.data;
         } catch (e: any) { // явное указание типа ошибки
             return thunkAPI.rejectWithValue(e.message);
         }

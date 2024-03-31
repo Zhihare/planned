@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { TaskListMenu } from '../TasksList/TasksList.styled'
-import { FaPlus } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useDispatch, useSelector } from 'react-redux';
-import { selectBackdrop } from '../redax/Tasks/tasksSelector';
-import { setBackdrop } from '../redax/Tasks/tasksSlice';
 
 interface TasksMenuProps {
   isActive: boolean; 

@@ -9,8 +9,8 @@ export const getAllTasks = createAsyncThunk(
 	"tasks/fetchTaskAll",
 	async (_, thunkAPI) => {
 		try {
-			const response = await axios.get(`/tasks`);
-			return response.data.result;
+            const response = await axios.get(`/tasks`);
+			return response.data;
 		} catch (e: any) {
 			return thunkAPI.rejectWithValue(e.message);
 		}
@@ -24,7 +24,7 @@ export const getOneTask = createAsyncThunk(
     async (id, thunkAPI) => {
         try {
             const response = await axios.get(`/tasks/${id}`);
-            return response.data.result;
+            return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
         }
@@ -37,7 +37,7 @@ export const patchTask = createAsyncThunk(
     async (id, thunkAPI) => {
         try {
             const response = await axios.patch(`/tasks/${id}`);
-            return response.data.result;
+            return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
         }

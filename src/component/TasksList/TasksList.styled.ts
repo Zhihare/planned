@@ -8,7 +8,7 @@ flex-direction: column;
 gap: 20px;
 
 width: calc(100%/4);
-min-width: 300px;
+min-width: 310px;
 margin-top: 30px;
 
 
@@ -125,4 +125,34 @@ li:last-child{
 &&.active{
     display: block;
 }
+`
+
+export const TasksListList = styled.ul`
+display: flex;
+flex-direction: column;
+gap: 20px;
+
+`
+
+export const TasklistForm = styled.form`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+
+    button{
+        background-color: transparent;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+
+        svg{
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    input {
+        font-size: 18px;
+    }
 `

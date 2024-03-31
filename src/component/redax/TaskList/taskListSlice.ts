@@ -4,12 +4,17 @@ import { createTaskList, deleteTaskList, getAllTaskList, patchTaskList } from '.
 export interface TaskListState {
   taskList: TaskList[];
   loading: boolean;
-  error: string | null;
+    error: string | null;
+    edit: boolean;
+    editingTaskId: number | null;
+    menu: boolean
 }
 
 interface TaskList {
     id?: number;
     name: string;
+    tasks: [];
+
 }
 
 
@@ -17,6 +22,9 @@ const initialState: TaskListState = {
     taskList: [],
     loading: false,
     error: null,
+    edit: false,
+    editingTaskId: null,
+    menu: false,
 };
 
 const taskListSlice = createSlice({
@@ -32,6 +40,18 @@ const taskListSlice = createSlice({
         setIsLoading(state, action){
             state.loading = action.payload;
         },
+
+        setEdit(state, action) {
+            state.edit = action.payload;
+        },
+
+        setMenu(state, action) {
+            state.menu = action.payload;
+        },
+
+        setEditingTaskId(state, action) {
+      state.editingTaskId = action.payload;
+    },
 	},
 
 	extraReducers: builder => {
@@ -56,15 +76,16 @@ const taskListSlice = createSlice({
                 state.loading = false;
                 state.error = null;
                 const newTaskList: TaskList = action.payload; 
-                state.taskList.push(newTaskList);
+                state.taskList.unshift(newTaskList);
+                state.editingTaskId = action.payload.id
             })
             
             .addCase(deleteTaskList.fulfilled, (state, action) => {
-                state.loading = false;
-                state.error = null;
-                const deletedTaskListId = action.payload.id;
-                state.taskList = state.taskList.filter((taskList: any) => taskList.id !== deletedTaskListId);
-            })
+                 state.loading = false;
+    state.error = null;
+    const deletedTaskListId = action.meta.arg;
+    state.taskList = state.taskList.filter((taskList: TaskList) => taskList.id !== deletedTaskListId);
+})
         
             .addMatcher(
                 isAnyOf(
@@ -93,4 +114,4 @@ const taskListSlice = createSlice({
 });
 
 export const taskListReducer = taskListSlice.reducer;
-export const {setTaskList, setIsLoading} = taskListSlice.actions;
+export const {setTaskList, setIsLoading,setMenu, setEdit, setEditingTaskId} = taskListSlice.actions;

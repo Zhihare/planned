@@ -3,17 +3,44 @@ import { TaskListMenu } from '../TasksList/TasksList.styled'
 import { FaPlus } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectEditTaskListId, selectMenu } from '../redax/TaskList/taskListSelector';
+import { setEdit, setEditingTaskId, setMenu } from '../redax/TaskList/taskListSlice';
+import { deleteTaskList } from '../redax/TaskList/taskListThank';
+import { AppDispatch } from '../redax/store';
 
 interface TasksMenuProps {
-  isActive: boolean; 
+  taskListId: number;
 }
 
-const TasksMenu: React.FC<TasksMenuProps> = ({ isActive }) => {
+const TasksMenu: React.FC<TasksMenuProps> = ({ taskListId }) => {
+  const menu = useSelector(selectMenu);
+  const editingTaskId = useSelector(selectEditTaskListId);
+
+  const dispatch: AppDispatch = useDispatch();
+
+  
+
+  const handleEditClick = () => {
+    dispatch(setEdit(true)); 
+    dispatch(setEditingTaskId(taskListId));
+    dispatch(setMenu(false));
+  };
+
+  const handleDeleteClick = () => {
+  dispatch(deleteTaskList(taskListId));
+  dispatch(setEdit(false));
+  dispatch(setEditingTaskId(null));
+  dispatch(setMenu(false));
+};
+
+  
+  
   return (
-       <TaskListMenu className={` ${isActive ? 'active' : ''}`}>
+       <TaskListMenu className={` ${menu && editingTaskId === taskListId ? 'active' : ''}`}>
         <ul>
             <li>
-              <button><FiEdit />Edit</button>
+              <button onClick={handleEditClick}><FiEdit />Edit</button>
             </li>
             <li>
               <button>
@@ -21,7 +48,7 @@ const TasksMenu: React.FC<TasksMenuProps> = ({ isActive }) => {
               </button>
               </li>
             <li>
-              <button>
+              <button onClick={handleDeleteClick}>
                 <RiDeleteBin6Line />Delete
                 </button>
             </li>

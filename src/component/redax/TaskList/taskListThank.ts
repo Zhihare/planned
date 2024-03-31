@@ -7,8 +7,9 @@ export const getAllTaskList = createAsyncThunk(
 	"taskList/fetchTaskListAll",
 	async (_, thunkAPI) => {
 		try {
-			const response = await axios.get(`/task-lists`);
-			return response.data.result;
+            const response = await axios.get(`/task-lists`);
+            
+			return response.data;
 		} catch (e: any) {
 			return thunkAPI.rejectWithValue(e.message);
 		}
@@ -18,10 +19,11 @@ export const getAllTaskList = createAsyncThunk(
 
 export const patchTaskList = createAsyncThunk(
     "taskList/patchTaskList",
-    async (id, thunkAPI) => {
+    async ({ id, name }: { id: number; name: string }, thunkAPI) => {
         try {
-            const response = await axios.patch(`/task-lists/${id}`);
-            return response.data.result;
+            const response = await axios.patch(`/task-lists/${id}`, { name: name });
+            return response.data;
+            
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
         }
@@ -31,10 +33,10 @@ export const patchTaskList = createAsyncThunk(
 
 export const deleteTaskList = createAsyncThunk(
     "taskList/deleteTaskList",
-    async (id, thunkAPI) => {
+    async (id: number, thunkAPI) => {
         try {
             const response = await axios.delete(`/task-lists/${id}`);
-            return response.data.result;
+            return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
         }
@@ -44,10 +46,10 @@ export const deleteTaskList = createAsyncThunk(
 
 export const createTaskList = createAsyncThunk(
     "taskList/createTaskList",
-    async (taskList, thunkAPI) => {
+    async (taskList: object, thunkAPI) => {
         try {
             const response = await axios.post(`/task-lists`, taskList);
-            return response.data.result;
+            return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
         }

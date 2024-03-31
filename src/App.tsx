@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Header } from './component/Header/Header';
 import TasksList from './component/TasksList/TasksList';
@@ -6,7 +6,7 @@ import History from './component/History/History';
 import { BackdropContainer } from './component/Backdrop/Backdrop.styled';
 import TasksEdit from './component/TasksEdit/TasksEdit';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectBackdrop, selectTasks } from './component/redax/Tasks/tasksSelector';
+import { selectBackdrop, selectEditTask, selectTasks } from './component/redax/Tasks/tasksSelector';
 import { selectTaskList } from './component/redax/TaskList/taskListSelector';
 import { selectActiveLogs } from './component/redax/ActiveLog/activeSelector';
 import { setIsLoading } from './component/redax/TaskList/taskListSlice';
@@ -14,40 +14,48 @@ import { getAllTaskList } from './component/redax/TaskList/taskListThank';
 import { getAllTasks } from './component/redax/Tasks/tasksThank';
 import { getAllActive } from './component/redax/ActiveLog/activeThank';
 import { AppDispatch } from './component/redax/store';
+import { AppList } from './App.styled';
+import { setBackdrop, setEditTask } from './component/redax/Tasks/tasksSlice';
 
 function App() {
- const dispatch: AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const backdrop = useSelector(selectBackdrop);
+  const editTask = useSelector(selectEditTask);
   const tasks = useSelector(selectTasks);
   const taskList = useSelector(selectTaskList);
   const activeLog = useSelector(selectActiveLogs);
 
-  console.log(tasks);
-  console.log(activeLog);
-  console.log(taskList);
 
-  const [isOpen, setIsOpen] = useState(backdrop);
   
-    const handleBackdropClick = () => {
-    setIsOpen(false);
-    };
+  const handleBackdropClick = () => {
+    dispatch(setBackdrop(false));
+    dispatch(setEditTask(false));
+  };
   
-  useEffect(() => {
-   if (!tasks || !taskList || !activeLog || (!tasks.length && !taskList.length && !activeLog.length)) {
-      dispatch(setIsLoading(true));
-      dispatch(getAllTaskList());
-      dispatch(getAllTasks());
-      dispatch(getAllActive());
-    }
-  }, [dispatch, taskList, tasks, activeLog]);
-
+useEffect(() => {
+  if ((!tasks || tasks.length === 0) || (!taskList || taskList.length === 0) || (!activeLog || activeLog.length === 0)) {
+    dispatch(setIsLoading(true));
+    dispatch(getAllTaskList());
+    dispatch(getAllTasks());
+    dispatch(getAllActive());
+  }
+}, [dispatch, tasks, taskList, activeLog]);
+ 
   return (
     <div className="App">
+     
       <Header />
-      <TasksList />
-      <History/>
-      <BackdropContainer onClick={handleBackdropClick} className={backdrop? 'active' : ''} />
-      <TasksEdit isOpen={isOpen} />
+      <AppList>
+        {taskList.map(e => (
+          <li key={e.id}>
+            {e.id !== undefined && <TasksList idList={e.id} name={e.name} tasks={e.tasks} />}
+          </li>
+        ))}
+      </AppList>
+       <BackdropContainer onClick={handleBackdropClick} className={backdrop ? 'active' : ''}>
+        <History />
+        <TasksEdit isOpen={editTask} />
+        </BackdropContainer>
     </div>
   );
 }

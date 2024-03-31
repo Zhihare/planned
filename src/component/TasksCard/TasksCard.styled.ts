@@ -64,7 +64,7 @@ li:last-child{
     align-items: center;
     gap: 10px;
     padding: 5px 20px;
-    width: fit-content;
+    width: 100%;
 
     background-color: #e6eff7;
     border-radius: 20px;
@@ -77,6 +77,12 @@ li:last-child::before{
     height: 10px;
     border-radius: 50%;
     background-color: #878787;
+}
+
+p{
+    font-size: 16px;
+    color: #a1a1a1;
+        width: 290px;
 }
 
 `

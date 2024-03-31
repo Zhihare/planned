@@ -8,7 +8,7 @@ top: 0;
 right: 0;
 
 width: 450px;
-height: 100%;
+height: 100vh;
 z-index: 100;
 background-color: #f3f4f6;
 
@@ -43,9 +43,12 @@ export const HistoryHeader = styled.div`
 export const HistoryBody = styled.div`
   display: flex;
   flex-direction: column;
+  height: 90%;
+  overflow: hidden;
+  overflow-y: scroll;
 
   gap: 20px;
-
+  margin-bottom: 50px;
   padding: 40px 50px;
   `
 
@@ -72,6 +75,7 @@ p:first-child{
 p:first-child::before{
     content: "";
     display: block;
+    margin-top: 10px;
     width: 5px;
     height: 5px;
     background-color: #a5a9b9;

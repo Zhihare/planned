@@ -6,6 +6,7 @@ export interface TaskState {
   loading: boolean;
     error: string | null;
     backdrop: boolean;
+    editTask: boolean
 }
 
 interface Task {
@@ -23,6 +24,7 @@ const initialState: TaskState = {
     loading: false,
     error: null,
     backdrop: false,
+    editTask: false,
 };
 
 const taskSlice = createSlice({
@@ -41,6 +43,10 @@ const taskSlice = createSlice({
 
         setBackdrop(state, action) {
             state.backdrop = action.payload;
+        },
+
+        setEditTask(state, action) {
+            state.editTask = action.payload;
         }
 	},
 
@@ -103,4 +109,4 @@ const taskSlice = createSlice({
 });
 
 export const taskReducer = taskSlice.reducer;
-export const {setBackdrop, setIsLoading, setTask} = taskSlice.actions;
+export const {setBackdrop, setEditTask, setIsLoading, setTask} = taskSlice.actions;
