@@ -15,7 +15,7 @@ import { getAllTasks } from './component/redax/Tasks/tasksThank';
 import { getAllActive } from './component/redax/ActiveLog/activeThank';
 import { AppDispatch } from './component/redax/store';
 import { AppList } from './App.styled';
-import { setBackdrop, setEditTask } from './component/redax/Tasks/tasksSlice';
+
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -27,32 +27,28 @@ function App() {
 
 
   
-  const handleBackdropClick = () => {
-    dispatch(setBackdrop(false));
-    dispatch(setEditTask(false));
-  };
-  
-useEffect(() => {
-  if ((!tasks || tasks.length === 0) || (!taskList || taskList.length === 0) || (!activeLog || activeLog.length === 0)) {
-    dispatch(setIsLoading(true));
-    dispatch(getAllTaskList());
-    dispatch(getAllTasks());
-    dispatch(getAllActive());
-  }
-}, [dispatch, tasks, taskList, activeLog]);
+ useEffect(() => {
+    
+    if ((!tasks || tasks.length === 0) || (!taskList || taskList.length === 0) || (!activeLog || activeLog.length === 0)) {
+    
+      dispatch(setIsLoading(true)); 
+      dispatch(getAllTaskList()); 
+      dispatch(getAllTasks()); 
+      dispatch(getAllActive()); 
+    }
+  }, [dispatch, tasks, taskList, activeLog]);
  
   return (
     <div className="App">
-     
-      <Header />
-      <AppList>
+      <Header/>
+      <AppList >
         {taskList.map(e => (
           <li key={e.id}>
-            {e.id !== undefined && <TasksList idList={e.id} name={e.name} tasks={e.tasks} />}
+            {e.id !== undefined && <TasksList idList={e.id} name={e.name} tasks={tasks.filter(task => task.list.id === e.id)} />}
           </li>
         ))}
       </AppList>
-       <BackdropContainer onClick={handleBackdropClick} className={backdrop ? 'active' : ''}>
+       <BackdropContainer className={backdrop|| editTask ? 'active' : ''}>
         <History />
         <TasksEdit isOpen={editTask} />
         </BackdropContainer>

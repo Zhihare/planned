@@ -13,6 +13,7 @@ import { AppDispatch } from '../redax/store';
 import { setEdit, setEditingTaskId, setMenu } from '../redax/TaskList/taskListSlice';
 import { TfiSave } from "react-icons/tfi";
 import { useBackdropToggleEdit } from '../../utils/togleEdit';
+import { setActive } from '../redax/ActiveLog/activeSlice';
 
 interface TasksListProps {
   idList: number;
@@ -25,7 +26,8 @@ interface TasksListProps {
 const TasksList: React.FC<TasksListProps> = ({idList, name, tasks}) => {
   const menu = useSelector(selectMenu);
   const edit = useSelector(selectEdit);
-  const toggleActiveBackdrop = useBackdropToggleEdit();
+
+  const toggleActiveBackdrop = useBackdropToggleEdit(idList, 0);
   const [taskListName, setTaskListName] = useState('');
   const editingTaskId = useSelector(selectEditTaskListId);
   const dispatch: AppDispatch = useDispatch();
@@ -40,7 +42,8 @@ const TasksList: React.FC<TasksListProps> = ({idList, name, tasks}) => {
 
   const handleAddTaskList = () => {
   dispatch(patchTaskList({ id: idList, name: taskListName }));
-    handleCancel() 
+    handleCancel()
+    dispatch(setActive([]));
   };
 
   const handleCancel = () => {
@@ -51,6 +54,7 @@ const TasksList: React.FC<TasksListProps> = ({idList, name, tasks}) => {
   return (
 
     <TasksListContainer>
+            
       <TasksListHeader>
         {edit && editingTaskId === idList ? (
        
@@ -78,7 +82,7 @@ const TasksList: React.FC<TasksListProps> = ({idList, name, tasks}) => {
       <TasksListButton onClick={toggleActiveBackdrop}><FaPlus /> Add new card</TasksListButton>
       {tasks && tasks.length > 0 ? (
       tasks.map((task) => (
-        <li key={task.id}><TasksCard tasks={task} /></li>
+        <li key={task.id}><TasksCard task={task} /></li>
       ))
     ) : (
       <></>

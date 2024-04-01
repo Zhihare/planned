@@ -47,47 +47,35 @@ export const HistoryBody = styled.div`
   overflow: hidden;
   overflow-y: scroll;
 
-  gap: 20px;
+  gap: 30px;
   margin-bottom: 50px;
   padding: 40px 50px;
+
+
+  &.historyTask{
+    padding: 0;
+  }
   `
 
 
 export const HistoryItem = styled.li`
 display: flex;
 flex-direction: column;
-gap: 10px;
+gap: 8px;
 
 p:first-child{
-    display: flex;
-    align-items: center;
     font-size: 18px;
     color: #a5a9b9;
 
         span{
-        display: flex;
-        align-items: center;
         color: #000000;
         margin: 0 5px;
     }
 }
 
-p:first-child::before{
-    content: "";
-    display: block;
-    margin-top: 10px;
-    width: 5px;
-    height: 5px;
-    background-color: #a5a9b9;
-    border-radius: 50%;
-    margin-right: 10px;
-
-
-}
 
 p:last-child{
     color: #a5a9b9;
     font-style: italic;
-    padding-left: 15px;
 }
 `

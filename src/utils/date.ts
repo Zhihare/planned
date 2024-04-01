@@ -1,6 +1,6 @@
-export const formatDate = (dateString: Date, format: 3 | 5) => {
+export const formatDate = (dateString: Date| null, format: 3 | 5) => {
    
-    if (format === 3) {
+    if (format === 3 && dateString) {
         const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
         const date = new Date(dateString);
@@ -9,8 +9,8 @@ export const formatDate = (dateString: Date, format: 3 | 5) => {
         const month = date.toLocaleString('en', { month: 'short' });
 
         return `${dayOfWeek}, ${dayOfMonth} ${month}`;
-    };
-    if (format === 5) {
+    }
+    if (format === 5 && dateString) {
         const date = new Date(dateString);
 
         const month = date.toLocaleString('en', { month: 'short' });
@@ -21,4 +21,8 @@ export const formatDate = (dateString: Date, format: 3 | 5) => {
 
         return `${month} ${day} at ${hour}:${minute < 10 ? '0' : ''}${minute} ${period}`;
     };
+
+    if (!dateString) {
+        return null;
+    }
 }

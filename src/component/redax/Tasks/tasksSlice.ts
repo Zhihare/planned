@@ -6,17 +6,34 @@ export interface TaskState {
   loading: boolean;
     error: string | null;
     backdrop: boolean;
-    editTask: boolean
+    editTask: boolean;
+    dataEditTask: Task|number;
 }
 
-interface Task {
+export interface Task {
     id?: number,
-    action?: string,
+    name?: string,
     description?: string,
-    timestamp?: Date| null,
-    task_Id?: number,
-    listId?: number,
+    deadline?: Date|null,
+    priority?: string,
+    list: List,
 }
+
+export interface Taskpatch {
+    id?: number,
+    name?: string,
+    description?: string,
+    deadline?: Date|null,
+    priority?: string,
+    list: number,
+}
+
+interface List {
+    id?: number;
+    name: string;
+}
+
+
 
 
 const initialState: TaskState = {
@@ -25,13 +42,18 @@ const initialState: TaskState = {
     error: null,
     backdrop: false,
     editTask: false,
+    dataEditTask: 0,
 };
 
 const taskSlice = createSlice({
 	name: 'tasks',
 	initialState,
 
-	reducers: {
+    reducers: {
+        
+        setDataEditTak(state, action) {
+            state.dataEditTask = action.payload;
+        },
 
 		setTask(state, action) {
 			state.tasks = action.payload;
@@ -78,8 +100,8 @@ const taskSlice = createSlice({
             .addCase(deleteTask.fulfilled, (state, action) => {
                 state.loading = false;
                 state.error = null;
-                const deletedTask = action.payload.id;
-                state.tasks = state.tasks.filter((taskList: any) => taskList.id !== deletedTask);
+                const deletedTask = action.payload;
+                state.tasks = state.tasks.filter((task: Task) => task.id !== deletedTask);
             })
         
             .addMatcher(
@@ -109,4 +131,4 @@ const taskSlice = createSlice({
 });
 
 export const taskReducer = taskSlice.reducer;
-export const {setBackdrop, setEditTask, setIsLoading, setTask} = taskSlice.actions;
+export const {setBackdrop, setDataEditTak, setEditTask, setIsLoading, setTask} = taskSlice.actions;

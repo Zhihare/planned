@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TasksCardBody, TasksCardContainer, TasksCardHeader, TasksCardSelect } from './TasksCard.styled'
 import { SlOptionsVertical } from "react-icons/sl";
 import { LuCalendar } from "react-icons/lu";
 import TaskMenu from '../Menu/TaskMenu';
-import { useSelector } from 'react-redux';
-import { selectTaskList } from '../redax/TaskList/taskListSelector';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMenu, selectTaskList } from '../redax/TaskList/taskListSelector';
 import { formatDate } from '../../utils/date';
+import { setEditingTaskId, setMenu } from '../redax/TaskList/taskListSlice';
+import { AppDispatch } from '../redax/store';
+import { patchTask } from '../redax/Tasks/tasksThank';
 
 interface TasksCardProps {
-  tasks: Task;
+  task: Task;
 }
 
 interface Task {
@@ -17,20 +20,34 @@ interface Task {
   description: string;
   deadline: Date;
   priority: string;
+  list: List
+}
+
+interface List{
+  id: number;
+  name: string;
 }
 
  
 
 
-const TasksCard: React.FC<TasksCardProps> = ({tasks}) => {
+const TasksCard: React.FC<TasksCardProps> = ({task}) => {
   const taskList = useSelector(selectTaskList);
-  const [isActive, setIsActive] = useState(false);
+  const menu = useSelector(selectMenu);
+  const dispatch: AppDispatch = useDispatch();
   
-    const {name, description, priority, deadline } = tasks;
+    const {id, name, description, priority, deadline } = task;
   
   const toggleActive = () => {
-    setIsActive(!isActive);
+    dispatch(setMenu(!menu));
+    dispatch(setEditingTaskId(id));
   };
+
+
+  const chengeList = (idList: number) => {
+    dispatch(patchTask({ id, name, deadline, priority, list: idList }))
+    console.log('hello', id, idList);
+  }
 
 
 
@@ -39,7 +56,7 @@ const TasksCard: React.FC<TasksCardProps> = ({tasks}) => {
           <TasksCardHeader>
         <h3>{name}</h3>
               <button onClick={toggleActive}><SlOptionsVertical /></button>
-            <TaskMenu isActive={isActive} />
+            <TaskMenu taskId={id} />
           </TasksCardHeader>
           
           <TasksCardBody>
@@ -54,10 +71,10 @@ const TasksCard: React.FC<TasksCardProps> = ({tasks}) => {
             <p>{priority}</p>
               </li>
           </TasksCardBody>
-      <TasksCardSelect name="moveTo" >
+      <TasksCardSelect name="moveTo" onChange={(e) => chengeList(Number(e.target.value))}>
                 <option value="" disabled selected hidden>Move to:</option>
-                {taskList.map((task) =>(        
-                  <option key={task.id} value={task.id}>{task.name}</option> 
+                {taskList.map((task: any) =>(        
+                  <option  key={task.id} value={task.id}>{task.name}</option> 
                 ))}
         </TasksCardSelect>
     </TasksCardContainer>

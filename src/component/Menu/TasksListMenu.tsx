@@ -8,6 +8,8 @@ import { selectEditTaskListId, selectMenu } from '../redax/TaskList/taskListSele
 import { setEdit, setEditingTaskId, setMenu } from '../redax/TaskList/taskListSlice';
 import { deleteTaskList } from '../redax/TaskList/taskListThank';
 import { AppDispatch } from '../redax/store';
+import { useBackdropToggleEdit } from '../../utils/togleEdit';
+import { setActive } from '../redax/ActiveLog/activeSlice';
 
 interface TasksMenuProps {
   taskListId: number;
@@ -16,7 +18,7 @@ interface TasksMenuProps {
 const TasksMenu: React.FC<TasksMenuProps> = ({ taskListId }) => {
   const menu = useSelector(selectMenu);
   const editingTaskId = useSelector(selectEditTaskListId);
-
+   const toggleActiveBackdrop = useBackdropToggleEdit(taskListId, 0);
   const dispatch: AppDispatch = useDispatch();
 
   
@@ -25,13 +27,15 @@ const TasksMenu: React.FC<TasksMenuProps> = ({ taskListId }) => {
     dispatch(setEdit(true)); 
     dispatch(setEditingTaskId(taskListId));
     dispatch(setMenu(false));
+     dispatch(setActive([]));
   };
 
   const handleDeleteClick = () => {
   dispatch(deleteTaskList(taskListId));
   dispatch(setEdit(false));
   dispatch(setEditingTaskId(null));
-  dispatch(setMenu(false));
+    dispatch(setMenu(false));
+    dispatch(setActive([]));
 };
 
   
@@ -43,7 +47,7 @@ const TasksMenu: React.FC<TasksMenuProps> = ({ taskListId }) => {
               <button onClick={handleEditClick}><FiEdit />Edit</button>
             </li>
             <li>
-              <button>
+              <button onClick={toggleActiveBackdrop}>
                 <FaPlus />Add new card
               </button>
               </li>

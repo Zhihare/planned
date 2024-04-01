@@ -88,7 +88,7 @@ export const TaskListMenu = styled.div`
 display: none;
 position: absolute;
    right: -160px;
-    bottom: -110px;
+    bottom: -140px;
 
 border: 1px solid #a1a1a1;
 width: 180px;

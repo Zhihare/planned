@@ -1,6 +1,7 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { createTaskList, deleteTaskList, getAllTaskList, patchTaskList } from './taskListThank';
 
+
 export interface TaskListState {
   taskList: TaskList[];
   loading: boolean;
@@ -82,10 +83,12 @@ const taskListSlice = createSlice({
             
             .addCase(deleteTaskList.fulfilled, (state, action) => {
                  state.loading = false;
-    state.error = null;
-    const deletedTaskListId = action.meta.arg;
-    state.taskList = state.taskList.filter((taskList: TaskList) => taskList.id !== deletedTaskListId);
-})
+                 state.error = null;
+                 const deletedTaskListId = action.meta.arg;
+                 state.taskList = state.taskList.filter((taskList: TaskList) => taskList.id !== deletedTaskListId);
+            })
+
+        
         
             .addMatcher(
                 isAnyOf(

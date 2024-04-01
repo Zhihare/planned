@@ -9,6 +9,7 @@ import { createTaskList } from '../redax/TaskList/taskListThank';
 import { AppDispatch } from '../redax/store';
 
 import { setEdit } from '../redax/TaskList/taskListSlice';
+import { setActive } from '../redax/ActiveLog/activeSlice';
 
 export const Header = () => {
     // const backdrop = useSelector(selectBackdrop);
@@ -19,6 +20,7 @@ export const Header = () => {
     const handleAddTaskList = () => {
         dispatch(createTaskList({ name: "New categories" })); 
         dispatch(setEdit(true));
+        dispatch(setActive([]));
   };
     
   return (

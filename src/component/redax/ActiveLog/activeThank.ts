@@ -10,7 +10,6 @@ export const getAllActive = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
             const response = await axios.get(`/activity-log`);
-             console.log(response.data);
 			return response.data;
 		} catch (e: any) {
 			return thunkAPI.rejectWithValue(e.message);

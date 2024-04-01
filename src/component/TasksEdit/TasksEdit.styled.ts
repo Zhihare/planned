@@ -61,6 +61,7 @@ export const TasksEditForm = styled.form`
     flex-direction: column;
     align-items: center;
     height: 100%;
+    padding: 50px;
     border-bottom-left-radius: 20px;
 
     background-color: #ffffff;
@@ -68,11 +69,101 @@ export const TasksEditForm = styled.form`
 
     `
 
+export const NameSection = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 40px;
+
+    input{
+        letter-spacing: -0.7px;
+        border: none;
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+`
+
+export const StatusSection = styled.div`
+display: flex;
+margin-bottom: 20px;
+width: 100%;
+gap: 100px;
+margin-bottom: 30px;
+justify-content: flex-start;
+letter-spacing: -1px;
+
+
+label{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 110px;
+    font-size: 16px;
+    color: #8a8a8a;
+    font-weight: 600;
+}
+
+input{
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+}
+
+select{
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    width: 150px;
+}
+
+`
+
+export const DescriptionSection = styled.div`
+display: flex;
+flex-direction: column;
+width: 100%;
+gap: 20px;
+justify-content: flex-start;
+
+
+label{
+    width: 100px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+textarea{
+    width: 100%;
+    height: 200px;
+    font-size: 16px;
+    color: #8a8a8a;
+    resize: none;
+    border: none;
+    letter-spacing: -1px;
+}
+`
+
+
 export const TasksEditHistory = styled.div`
     background-color: #f3f4f6;
     border-bottom-right-radius: 20px;
     width: 35%;
     height: 100%;
-  
+    padding: 50px;
+    
+
+  h2{ 
+    width: 100%;
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.7px;
+  }
+
+    div.historyTask{
+    padding: 0;
+  }
     
     `
