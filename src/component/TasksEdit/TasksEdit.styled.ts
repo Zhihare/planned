@@ -77,8 +77,8 @@ export const NameSection = styled.div`
     margin-bottom: 40px;
 
     input{
+        margin: 2px;
         letter-spacing: -0.7px;
-        border: none;
         font-size: 32px;
         font-weight: 600;
     }
@@ -108,13 +108,14 @@ label{
 input{
     font-size: 16px;
     font-weight: 600;
-    border: none;
+    
 }
 
 select{
+    margin: 4px;
     font-size: 16px;
     font-weight: 600;
-    border: none;
+    
     width: 150px;
 }
 
@@ -140,7 +141,7 @@ textarea{
     font-size: 16px;
     color: #8a8a8a;
     resize: none;
-    border: none;
+    margin: 2px;
     letter-spacing: -1px;
 }
 `
@@ -162,8 +163,6 @@ export const TasksEditHistory = styled.div`
     letter-spacing: -0.7px;
   }
 
-    div.historyTask{
-    padding: 0;
-  }
+
     
     `
