@@ -3,7 +3,7 @@ import { DescriptionSection, NameSection, StatusSection, TasksEditBody, TasksEdi
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { setBackdrop, setEditTask } from '../redax/Tasks/tasksSlice';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import { setEditingTaskId } from '../redax/TaskList/taskListSlice';
 import { AppDispatch } from '../redax/store';
 import { selectDataEditTask } from '../redax/Tasks/tasksSelector';
@@ -17,6 +17,7 @@ import { HistoryBody, HistoryItem } from '../History/History.styled';
 import { selectActiveLogs } from '../redax/ActiveLog/activeSelector';
 import { formatDate } from '../../utils/date';
 import { createTask, patchTask } from '../redax/Tasks/tasksThank';
+import { DatePicker } from 'antd';
 
 interface TasksEditProps {
   isOpen: boolean; 
@@ -106,7 +107,7 @@ const TasksEdit: React.FC<TasksEditProps> = ({ isOpen }) => {
                   onChange={(e) => setTaskName(e.target.value)}
             />
             
-                <HeaderButton type="submit"><FaEdit />Edit task</HeaderButton>
+                <HeaderButton type="submit"><FaEdit />Save task</HeaderButton>
             </NameSection>
       <StatusSection>
         <label htmlFor="status"><GrStatusGood />Status:</label>
@@ -122,12 +123,11 @@ const TasksEdit: React.FC<TasksEditProps> = ({ isOpen }) => {
       </StatusSection>
       <StatusSection>
         <label htmlFor="dueDate"><CiCalendarDate />Due Date:</label>
-        <DatePicker
-          id="dueDate"
-          selected={dueDate}
-          onChange={handleDueDateChange}
-          dateFormat="dd/MM/yyyy"
-        />
+         
+            <DatePicker
+            onChange={handleDueDateChange}
+            defaultValue={dueDate}/>
+                        
       </StatusSection>
       <StatusSection>
         <label htmlFor="priority"><IoPricetagOutline />Priority:</label>

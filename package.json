@@ -50,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@types/antd": "^1.0.0",
     "@types/react-datepicker": "^6.2.0",
     "gh-pages": "6.1.1",
     "react-datepicker": "^6.6.0"
