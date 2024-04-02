@@ -18,10 +18,13 @@ import { selectActiveLogs } from '../redax/ActiveLog/activeSelector';
 import { formatDate } from '../../utils/date';
 import { createTask, patchTask } from '../redax/Tasks/tasksThank';
 import { DatePicker } from 'antd';
+import 'dayjs/locale/zh-cn';
 
 interface TasksEditProps {
   isOpen: boolean; 
 }
+
+
 
 const TasksEdit: React.FC<TasksEditProps> = ({ isOpen }) => {
    const dispatch: AppDispatch = useDispatch();
@@ -29,6 +32,7 @@ const TasksEdit: React.FC<TasksEditProps> = ({ isOpen }) => {
   const taskList = useSelector(selectTaskList);
   const activelog = useSelector(selectActiveLogs);
 
+ 
 
   const [taskName, setTaskName] = useState('');
   const [status, setStatus] = useState('');
@@ -37,6 +41,7 @@ const TasksEdit: React.FC<TasksEditProps> = ({ isOpen }) => {
   const [description, setDescription] = useState('');
   const [history, setHistory] = useState<any[]>([]);;
 
+  
 
   useEffect(() => {
     if (typeof dataEdit === 'object' && dataEdit.name && dataEdit.deadline &&
@@ -92,7 +97,10 @@ const TasksEdit: React.FC<TasksEditProps> = ({ isOpen }) => {
     dispatch(setEditingTaskId(null));
   };
 
+ 
   return (
+
+
       <TasksEditContainer className={`${isOpen ? 'active' : ''}`}>
           <TasksEditHeader>
               <button onClick={handleBackdropClick}><MdClose /></button>
@@ -125,8 +133,9 @@ const TasksEdit: React.FC<TasksEditProps> = ({ isOpen }) => {
         <label htmlFor="dueDate"><CiCalendarDate />Due Date:</label>
          
             <DatePicker
+              id="dueDate"
             onChange={handleDueDateChange}
-            defaultValue={dueDate}/>
+            />
                         
       </StatusSection>
       <StatusSection>
