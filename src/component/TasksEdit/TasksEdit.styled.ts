@@ -137,7 +137,7 @@ label{
 
 textarea{
     width: 100%;
-    height: 200px;
+    height: 150px;
     font-size: 16px;
     color: #8a8a8a;
     resize: none;
